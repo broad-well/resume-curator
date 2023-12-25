@@ -72,4 +72,5 @@ Each entry in `[technologies]` must contain keys `type` (`language`, `library`, 
 
 The **objective** is to maximize the sum of the total appeal score over all required qualifications * 2 + the sum of the total appeal score over all preferred qualifications. The **constraints** are:
 - The output cannot exceed 1 page. The sum of the expected vertical space taken up by all the entries cannot exceed 1 page minus the existing elements of the page.
-- There must be recent entries. At least one work experience item should be from the current year or the year before, while at least 2 project items should be from the current year or the year before.
+- There must be recent entries. In each section, at least 1 included entry must come from the most recent 30% of the candidates for that section (according to `order`).
+- At least 70% of the keywords in the job listing _that can be covered_ must be covered by at least 1 included entry each.

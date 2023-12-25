@@ -85,7 +85,7 @@ class Curation
       @prob.add(
         T.must(T.must(
           ordered_items.slice((ordered_items.length * 0.7).floor..))
-            .map {|(e, v)| v}.sum) >= 1)
+            .map {|(_, v)| v}.sum) >= 1)
     end
   end
 
@@ -93,11 +93,12 @@ class Curation
   def maximize_appeal
     # maximize "total appeal"
     # for each category, for each required qualification, sum up the appeal
-
+    # also add up the keywords satisfied
 
     required_appeal_sum = sum_appeals(@job_required)
     preferred_appeal_sum = sum_appeals(@job_preferred)
-    @prob.maximize(required_appeal_sum * REQ_MULTIPLIER + preferred_appeal_sum)
+    keywords_sum = sum_keywords * 10
+    @prob.maximize(required_appeal_sum * REQ_MULTIPLIER + preferred_appeal_sum + keywords_sum)
   end
 
   sig {params(quals: T::Array[String]).returns(T.untyped)}
@@ -111,6 +112,19 @@ class Curation
         entries.zip(vars).map do |(entry, var)|
           T.must(var) * (entry.appeal[qual] || 0)
         end.sum
+      end.sum
+    end.sum
+  end
+
+  sig {returns(T.untyped)}
+  def sum_keywords
+    [
+      [@work, @work_include],
+      [@projects, @projects_include],
+      [@activities, @activities_include]
+    ].map do |(entries, vars)|
+      entries.zip(vars).map do |(entry, var)|
+        T.must(var) * @job_keywords.intersection(entry.keywords).length
       end.sum
     end.sum
   end
