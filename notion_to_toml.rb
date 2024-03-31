@@ -16,7 +16,10 @@ LABEL_MAPPING = {
   "DS/AI/ML" => "ds_ai_ml",
   "Cloud" => "cloud",
   "VCS" => "vcs",
+  "SQL" => "databases",
+  "NoSQL" => "databases",
   "Version control" => "vcs",
+  "Source Control" => "vcs",
   "Python" => "python",
   "Troubleshooting" => "troubleshooting",
   "Security" => "security",
@@ -35,7 +38,11 @@ LABEL_MAPPING = {
   "Open Source" => "open_source",
   "Test-Driven Development" => "tdd",
   "Research" => "research",
-  "Algo&DS" => "ds_algo"
+  "Learning" => "learning",
+  "Algo&DS" => "ds_algo",
+  "Mobile" => "mobile",
+  "Simulation" => "simulation",
+  "SDLC" => "sdlc"
 }
 
 extend T::Sig
@@ -56,6 +63,7 @@ end
 
 table = T.let(CSV.table("notion_queue.csv"), CSV::Table)
 table.by_row.each do |row|
+  next if row[:applied] == 'Yes'
   p row
   toml_out = {
     "title" => row[:name],

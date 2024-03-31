@@ -49,7 +49,6 @@ RSpec.describe Curation do
       }
     )
     curation.solve!
-    p curation.decisions(:work)
     expect(curation.decisions(:work).count(true)).to(be > 3)
     expect(curation.decisions(:projects).count(true)).to(be > 1)
     expect(curation.decisions(:activities).count(true)).to(be > 0)

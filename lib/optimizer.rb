@@ -21,9 +21,9 @@ class Curation
     @projects = projects
     @activities = activities
     @job_title = T.let(T.cast(job["title"], String), String)
-    @job_required = T.let(T.cast(job["required"], T::Array[String]), T::Array[String])
-    @job_preferred = T.let(T.cast(job["preferred"], T::Array[String]), T::Array[String])
-    @job_keywords = T.let(T.cast(job["keywords"], T::Array[String]), T::Array[String])
+    @job_required = T.let(T.cast(job["required"] || [], T::Array[String]), T::Array[String])
+    @job_preferred = T.let(T.cast(job["preferred"] || [], T::Array[String]), T::Array[String])
+    @job_keywords = T.let(T.cast(job["keywords"] || [], T::Array[String]), T::Array[String])
 
     @work_include = T.let(entries_to_include_variables(work), T::Array[Opt::Binary])
     @projects_include = T.let(entries_to_include_variables(projects), T::Array[Opt::Binary])
